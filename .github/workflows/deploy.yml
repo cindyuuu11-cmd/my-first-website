@@ -1,0 +1,60 @@
+name: Deploy Astro to GitHub Pages
+
+on:
+  # 當推送至 main 分支時觸發自動部署
+  push:
+    branches: ["main"]
+  # 允許手動從 Actions 頁籤觸發
+  workflow_dispatch:
+
+# 將 GITHUB_TOKEN 的權限設定為允許部署到 Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允許一個並發部署，跳過並發正在進行中或是待處理的排程
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      # =======================================================
+      # 構建專案 (將環境變數從 Github Secrets 讀取並注入給 Astro 建置)
+      # 變數會對應專案的 .env.example 檔案設定
+      # =======================================================
+      - name: Build Astro application
+        run: npm run build
+        env:
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+          SECRET_API_KEY: ${{ secrets.SECRET_API_KEY }}
+
+      - name: Upload output artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

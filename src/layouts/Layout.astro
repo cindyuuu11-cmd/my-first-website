@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW" class="bg-black">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Fitness Coach App">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+		<title>{title}</title>
+	</head>
+	<body class="antialiased min-h-screen">
+		<slot />
+	</body>
+</html>

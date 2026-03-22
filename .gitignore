@@ -1,0 +1,35 @@
+# Node dependencies
+node_modules/
+/npm-debug.log*
+/yarn-error.log*
+/yarn-debug.log*
+/pnpm-debug.log*
+
+# Astro directories and build outputs
+dist/
+/dist-ssr
+/.astro/
+
+# Environment variables
+.env
+.env.production
+.env.local
+.env.development
+.env.test
+
+# OS and IDE configuration files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
