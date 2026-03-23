@@ -17,15 +17,24 @@ export const showCheckInModalStore = atom(false);
 export const showPaymentModalStore = atom(false);
 export const showAddStudentModalStore = atom(false);
 export const showRenewModalStore = atom(false);
+export const showEditStudentModalStore = atom(false); // New modal for editing/deleting/adding history
 
-export const paymentFormStore = atom({ amount: '', method: '現金', lastFive: '' });
+export const paymentFormStore = atom({ amount: '', method: '現金', lastFive: '', paidDate: todayStr });
 export const newStudentFormStore = atom({
     name: '',
+    phone: '',
+    memo: '',
+    contractPhoto: '',
     contractType: '預付 - 一次付清',
     totalLessons: 10,
     pricePerLesson: 1200,
     installmentCount: 1,
     expiryMonths: 6
+});
+
+export const editStudentFormStore = atom({
+    date: todayStr,
+    note: '一般訓練' // historical check-in note
 });
 
 export const renewFormStore = atom({

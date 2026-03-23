@@ -1,7 +1,7 @@
 import React from 'react';
-import { Search } from 'lucide-react';
+import { Search, Settings2 } from 'lucide-react';
 import { useStore } from '@nanostores/react';
-import { searchQueryStore, activeTabStore, selectedStudentStore, showCheckInModalStore } from '../store/uiStore';
+import { searchQueryStore, activeTabStore, selectedStudentStore, showCheckInModalStore, showEditStudentModalStore } from '../store/uiStore';
 import { filteredStudentsStore } from '../store/studentsStore';
 
 export const StudentsView = () => {
@@ -25,10 +25,20 @@ export const StudentsView = () => {
                     <div key={s.id} className="p-5 bg-zinc-900 border border-zinc-800 rounded-[32px]">
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white">{s.name[0]}</div>
+                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-xl font-bold text-white relative">
+                                    {s.name[0]}
+                                    {/* Edit button triggered from clicking the avatar or we can add a standalone button */}
+                                </div>
                                 <div><h3 className="font-bold text-white">{s.name}</h3><p className="text-[10px] text-zinc-500">{s.contractType}</p></div>
                             </div>
-                            <div className="text-right">
+                            <div className="flex flex-col items-end gap-2">
+                                <button
+                                    onClick={() => { selectedStudentStore.set(s); showEditStudentModalStore.set(true); }}
+                                    className="p-1.5 bg-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-colors"
+                                    title="編輯學員"
+                                >
+                                    <Settings2 size={16} />
+                                </button>
                                 {s.contractType === '先上課後結算' ? (
                                     <span className="px-2 py-1 bg-yellow-500/10 text-yellow-500 text-[10px] font-bold rounded-lg">待結 {s.usedLessons} 堂</span>
                                 ) : (
@@ -39,15 +49,15 @@ export const StudentsView = () => {
                         <div className="flex gap-2">
                             <button
                                 onClick={() => { selectedStudentStore.set(s); showCheckInModalStore.set(true); }}
-                                className="flex-1 py-3 bg-blue-600 text-white text-xs font-bold rounded-2xl"
+                                className="flex-1 py-3 bg-blue-600 text-white text-xs font-bold rounded-2xl active:scale-95 transition-transform"
                             >
                                 簽到課程
                             </button>
                             <button
                                 onClick={() => { selectedStudentStore.set(s); activeTabStore.set('details'); }}
-                                className="flex-1 py-3 bg-zinc-800 text-white text-xs font-bold rounded-2xl border border-zinc-700"
+                                className="flex-1 py-3 bg-zinc-800 text-white text-xs font-bold rounded-2xl border border-zinc-700 active:scale-95 transition-transform"
                             >
-                                歷史明細
+                                課程詳情
                             </button>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import { AddStudentModal } from './Modals/AddStudentModal';
 import { CheckInModal } from './Modals/CheckInModal';
 import { PaymentModal } from './Modals/PaymentModal';
 import { RenewModal } from './Modals/RenewModal';
+import { EditStudentModal } from './Modals/EditStudentModal';
 
 export const AppContainer = () => {
     const activeTab = useStore(activeTabStore);
@@ -33,6 +34,7 @@ export const AppContainer = () => {
             <CheckInModal />
             <PaymentModal />
             <RenewModal />
+            <EditStudentModal />
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { User } from 'lucide-react';
+import { User, Download } from 'lucide-react';
 import { useStore } from '@nanostores/react';
 import { activeTabStore } from '../store/uiStore';
+import { exportToCSV } from '../store/studentsStore';
 
 export const TopNav = () => {
     const activeTab = useStore(activeTabStore);
@@ -14,8 +15,13 @@ export const TopNav = () => {
     return (
         <div className="flex items-center justify-between px-6 py-4 sticky top-0 bg-black/80 backdrop-blur-md z-40 border-b border-zinc-900">
             <h1 className="text-xl font-bold text-white tracking-tight">{title}</h1>
-            <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700">
-                <User size={16} className="text-zinc-400" />
+            <div className="flex items-center gap-3">
+                <button onClick={exportToCSV} className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700 hover:bg-zinc-700 transition-colors" title="導出為 Excel/CSV">
+                    <Download size={14} className="text-blue-400" />
+                </button>
+                <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center border border-zinc-700">
+                    <User size={16} className="text-zinc-400" />
+                </div>
             </div>
         </div>
     );
